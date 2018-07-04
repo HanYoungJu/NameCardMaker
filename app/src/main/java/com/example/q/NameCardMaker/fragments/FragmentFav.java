@@ -3,6 +3,8 @@ package com.example.q.NameCardMaker.fragments;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ThumbnailUtils;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -33,6 +35,7 @@ public class FragmentFav extends Fragment {
     public FragmentFav() {
 
     }
+
     public static Fragment newInstance(String link_parameter,String name_parameter,String number_parameter) {
         FragmentFav fragment = new FragmentFav();
         Bundle args = new Bundle();
@@ -66,8 +69,10 @@ public class FragmentFav extends Fragment {
             }
         });
         Bitmap bm = BitmapFactory.decodeFile(link);
+        Bitmap thumbnail = ThumbnailUtils.extractThumbnail(bm,500,500);
+
         ImageView imageView = (ImageView) v.findViewById(R.id.picture);
-        imageView.setImageBitmap(bm);
+        imageView.setImageBitmap(thumbnail);
         view_name.setText(name);
         view_number.setText(number);
         return v;

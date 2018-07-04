@@ -2,26 +2,34 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
+    android:background="@android:color/white"
     android:id="@+id/frag_fav">
 
     <ImageView
         android:id="@+id/picture"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_margin="50dp"
+
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentRight="true"
+
+        android:rotation="180"
          />
 
     <TextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/white"
-        android:textSize="25sp"
+        android:layout_alignParentRight="true"
         android:layout_below="@id/picture"
+        android:layout_marginRight="60dp"
+        android:layout_marginTop="60dp"
+
+        android:rotation="90"
         android:text="name"
-        />
+        android:textColor="@android:color/black"
+        android:textSize="50sp" />
 
     <TextView
         android:id="@+id/number"
@@ -30,17 +38,20 @@
         android:layout_below="@id/picture"
         android:layout_toEndOf="@id/name"
         android:layout_toRightOf="@id/name"
+        android:rotation="90"
         android:textSize="25sp"
-        android:textColor="@android:color/white"
+        android:textColor="@android:color/black"
+
         android:text="number" />
 
     <Button
         android:id="@+id/button3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="158dp"
+
         android:text="Button" />
 
 
