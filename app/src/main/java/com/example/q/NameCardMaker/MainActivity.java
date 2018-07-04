@@ -29,25 +29,22 @@ public class MainActivity extends AppCompatActivity {
     private static int REQUEST_ALL = 3;
     private final int[] ICONS = {R.drawable.ic_launcher_foreground, R.drawable.ic_launcher_foreground, R.drawable.ic_launcher_foreground};
 
+    public void refresh(){
+        SharedPreferences pref = getSharedPreferences("Variable", 0);
+        String link_final = pref.getString("link", null);
+        String name_final = pref.getString("name", null);
+        String number_final = pref.getString("number", null);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frag_fav, FragmentFav.newInstance(link_final,name_final,number_final));
+        fragmentTransaction.commit();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ActivityCompat.requestPermissions(this, PERMISSIONS, REQUEST_ALL);
-        Button button = (Button)findViewById(R.id.button_main);
-        button.setOnClickListener(new Button.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                SharedPreferences pref = getSharedPreferences("Variable", 0);
-                String link_final = pref.getString("link", null);
-                String name_final = pref.getString("name", null);
-                String number_final = pref.getString("number", null);
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.frag_fav, FragmentFav.newInstance(link_final,name_final,number_final));
-                fragmentTransaction.commit();
-            }
-        });
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {

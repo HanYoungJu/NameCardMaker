@@ -1,17 +1,22 @@
 package com.example.q.NameCardMaker.fragments;
 
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.q.NameCardMaker.MainActivity;
 import com.example.q.NameCardMaker.R;
 
 
@@ -52,6 +57,14 @@ public class FragmentFav extends Fragment {
         v = inflater.inflate(R.layout.frag_fav, container, false);
         TextView view_name =(TextView) v.findViewById(R.id.name);
         TextView view_number =(TextView) v.findViewById(R.id.number);
+        Button button = (Button)v.findViewById(R.id.button3);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity activity = (MainActivity)getActivity();
+                activity.refresh();
+            }
+        });
         Bitmap bm = BitmapFactory.decodeFile(link);
         ImageView imageView = (ImageView) v.findViewById(R.id.picture);
         imageView.setImageBitmap(bm);
