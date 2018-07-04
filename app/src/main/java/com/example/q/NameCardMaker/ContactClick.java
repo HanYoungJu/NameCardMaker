@@ -13,14 +13,14 @@ public class ContactClick extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.big_contact);
-
-        // get intent data
+    }
+    @Override
+    public void onResume(){
+        super.onResume();
         Intent i = getIntent();
-
         // Selected image id
         final String name = i.getExtras().getString("name");
         final String number = i.getExtras().getString("number");
-
         Log.d("position is here", name);
         TextView name_view = (TextView) findViewById(R.id.name) ;
         name_view.setText(name);
@@ -36,7 +36,6 @@ public class ContactClick extends Activity {
                 startActivity(intent);
             }
         });
-
     }
 }
 
