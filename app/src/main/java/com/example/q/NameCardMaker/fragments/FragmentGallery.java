@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,6 +78,20 @@ public class FragmentGallery extends Fragment {
         return view;
     }
 
+    private Bitmap imgRotate(Bitmap bm){
+        int width = bm.getWidth();
+        int height = bm.getHeight();
+
+        Matrix matrix = new Matrix();
+        matrix.postRotate(90);
+
+        Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, true);
+        bm.recycle();
+
+        return resizedBitmap;
+
+    }
+
     private void dataSetting(){
 
         List<String> allimage = getCameraImages();
@@ -89,9 +105,16 @@ public class FragmentGallery extends Fragment {
             String imgpath = allimage.get(index++);
             Log.d("img path is ", imgpath);
             Bitmap bm = BitmapFactory.decodeFile(imgpath);
+            if(bm.getHeight()<bm.getWidth()){
+                bm = imgRotate(bm);
+            }
+
+
             Bitmap thumbnail = ThumbnailUtils.extractThumbnail(bm,300,300);
             mAdapter.addItem(thumbnail,imgpath);
             link.add(imgpath);
+
+
         }
 
         gv.setAdapter(mAdapter);

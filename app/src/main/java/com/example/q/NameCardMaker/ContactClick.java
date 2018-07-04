@@ -2,6 +2,7 @@ package com.example.q.NameCardMaker;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -30,10 +31,11 @@ public class ContactClick extends Activity {
         button1.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View view){
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                intent.putExtra("name",name);
-                intent.putExtra("number",number);
-                startActivity(intent);
+                SharedPreferences pref = getSharedPreferences("Variable", 0);
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putString("name", name);
+                editor.putString("number", number);
+                editor.commit();
             }
         });
     }

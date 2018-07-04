@@ -1,6 +1,7 @@
 package com.example.q.NameCardMaker;
 
 import android.Manifest;
+import android.content.SharedPreferences;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
@@ -37,13 +38,13 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View view){
-                Intent intent = getIntent();
-                String name = intent.getStringExtra("name");
-                String number = intent.getStringExtra("number");
-
+                SharedPreferences pref = getSharedPreferences("Variable", 0);
+                String link_final = pref.getString("link", null);
+                String name_final = pref.getString("name", null);
+                String number_final = pref.getString("number", null);
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.frag_fav, FragmentFav.newInstance(name,number));
+                fragmentTransaction.replace(R.id.frag_fav, FragmentFav.newInstance(link_final,name_final,number_final));
                 fragmentTransaction.commit();
             }
         });
