@@ -92,15 +92,16 @@ public class FragmentContacts extends Fragment {
 
             int typeidx = cursor2.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE);
             int numidx = cursor2.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
-            String number = null;
+            String mobile_num = null;
+            String home_num = null;
             while(cursor2.moveToNext()) {
                 String num = cursor2.getString(numidx);
                 switch (cursor2.getInt(typeidx)) {
                     case ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE:
-                        number = "휴대폰) "+num;
+                        mobile_num = "휴대폰) "+num;
                         break;
                     case ContactsContract.CommonDataKinds.Phone.TYPE_HOME:
-                        number = "집) "+num;
+                        mobile_num = "집) "+num;
                         break;
                 }
             }
@@ -116,7 +117,7 @@ public class FragmentContacts extends Fragment {
                 email = cursor3.getString(0);
             }
             cursor3.close();
-            list.add(new ModelContacts(name, number, email));
+            list.add(new ModelContacts(name, mobile_num, email));
         }
 
         return list;
