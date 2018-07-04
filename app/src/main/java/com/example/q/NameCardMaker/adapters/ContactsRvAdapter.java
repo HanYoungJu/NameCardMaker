@@ -52,14 +52,12 @@ public class ContactsRvAdapter extends RecyclerView.Adapter<ContactsRvAdapter.Vi
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        TextView contact_name, contact_number, contact_email;
+        TextView contact_name, contact_number;
         contact_name = holder.contact_name;
         contact_number = holder.contact_number;
-        contact_email = holder.contact_email;
 
         contact_name.setText(mListContacts.get(position).getName());
         contact_number.setText(mListContacts.get(position).getNumber());
-        contact_email.setText(mListContacts.get(position).getEmail());
     }
 
     @Override
@@ -68,13 +66,12 @@ public class ContactsRvAdapter extends RecyclerView.Adapter<ContactsRvAdapter.Vi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        TextView contact_name, contact_number, contact_email;
+        TextView contact_name, contact_number;
         public ViewHolder(View itemView) {
             super(itemView);
 
             contact_name = itemView.findViewById(R.id.contact_name);
             contact_number = itemView.findViewById(R.id.contact_number);
-            contact_email = itemView.findViewById(R.id.contact_email);
         }
         @Override
         public void onClick(View v) {

@@ -98,10 +98,10 @@ public class FragmentContacts extends Fragment {
                 String num = cursor2.getString(numidx);
                 switch (cursor2.getInt(typeidx)) {
                     case ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE:
-                        mobile_num = "휴대폰) "+num;
+                        mobile_num = "휴대폰 "+num;
                         break;
                     case ContactsContract.CommonDataKinds.Phone.TYPE_HOME:
-                        mobile_num = "집) "+num;
+                        mobile_num = "집 "+num;
                         break;
                 }
             }

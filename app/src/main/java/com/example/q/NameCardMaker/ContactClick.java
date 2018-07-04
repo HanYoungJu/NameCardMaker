@@ -37,7 +37,7 @@ public class ContactClick extends Activity {
         TextView name_view = (TextView) findViewById(R.id.big_contact_name) ;
         name_view.setText(name);
 
-        TextView number_view = (TextView) findViewById(R.id.big_contact_number) ;
+        TextView number_view = (TextView) findViewById(R.id.big_contact_mobile_number);
         number_view.setText(number);
 
         Button button1 = (Button) findViewById(R.id.button);
