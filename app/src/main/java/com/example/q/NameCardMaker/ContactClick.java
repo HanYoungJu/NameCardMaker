@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.ColorSpace;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
+import android.media.ThumbnailUtils;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +16,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.q.NameCardMaker.models.ModelContacts;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -31,7 +35,7 @@ public class ContactClick extends Activity {
         super.onResume();
         Intent i = getIntent();
         // Selected image id
-        final String photo = i.getExtras().getString("photo");
+        final ModelContacts list = (ModelContacts) i.getSerializableExtra("list");
         final String name = i.getExtras().getString("name");
         final String mobile_num = i.getExtras().getString("mobile_num");
         final String home_num = i.getExtras().getString("home_num");
@@ -42,23 +46,32 @@ public class ContactClick extends Activity {
         InputStream photo_is = null;
 
         Bitmap contactPhoto = BitmapFactory.decodeStream(photo_is);
-        id_view.setImageBitmap(contactPhoto);
-
+        Bitmap thumbnail = ThumbnailUtils.extractThumbnail(contactPhoto,1000,1000);
+        if(contactPhoto!=null){
+            id_view.setImageBitmap(thumbnail);
+        }
         if(Build.VERSION.SDK_INT >= 21) {
-        id_view.setBackground(new ShapeDrawable(new OvalShape()));
-        id_view.setClipToOutline(true);}
+            id_view.setBackground(new ShapeDrawable(new OvalShape()));
+            id_view.setClipToOutline(true);
+        }
 
         TextView name_view = (TextView) findViewById(R.id.big_contact_name) ;
         name_view.setText(name);
 
         TextView mobile_num_view = (TextView) findViewById(R.id.big_contact_mobile_num);
-        mobile_num_view.setText(mobile_num);
+        if(mobile_num!=null){
+            mobile_num_view.setText(mobile_num);
+        }
 
         TextView home_num_view = (TextView) findViewById(R.id.big_contact_home_num);
-        home_num_view.setText(home_num);
+        if(home_num!=null){
+            home_num_view.setText(home_num);
+        }
 
         TextView email_view = (TextView) findViewById(R.id.big_contact_email);
-        email_view.setText(email);
+        if(email!=null){
+            email_view.setText(email);
+        }
 
         Button button1 = (Button) findViewById(R.id.button);
         button1.setOnClickListener(new Button.OnClickListener(){

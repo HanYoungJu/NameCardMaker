@@ -47,13 +47,14 @@ public class FragmentContacts extends Fragment {
         ContactsRvAdapter adapter = new ContactsRvAdapter(getContext(), getContacts());
 
         recyclerView.setAdapter(adapter);
-        final List<ModelContacts> contacts_list = adapter.getContacts();
+        final ArrayList<ModelContacts> contacts_list = adapter.getContacts();
         recyclerView.addOnItemTouchListener(new RecyclerViewOnItemClickListener(getActivity(), recyclerView,
                 new RecyclerViewOnItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
+                ModelContacts list = contacts_list.get(position+1);
                 Intent i = new Intent(getActivity().getApplicationContext(), ContactClick.class);
-                i.putExtra("photo", contacts_list.get(position).getPhoto());
+                i.putExtra("contact",list);
                 i.putExtra("name", contacts_list.get(position).getName());
                 i.putExtra("mobile_num", contacts_list.get(position).getMobile_num());
                 i.putExtra("home_num", contacts_list.get(position).getHome_num());
@@ -62,8 +63,9 @@ public class FragmentContacts extends Fragment {
             }
             @Override
             public void onItemLongClick(View v, int position) {
+                ModelContacts list = contacts_list.get(position+1);
                 Intent i = new Intent(getActivity().getApplicationContext(), ContactClick.class);
-                i.putExtra("photo", contacts_list.get(position).getPhoto());
+                i.putExtra("contact",list);
                 i.putExtra("name", contacts_list.get(position).getName());
                 i.putExtra("mobie_num", contacts_list.get(position).getMobile_num());
                 i.putExtra("home_num", contacts_list.get(position).getHome_num());
@@ -75,29 +77,8 @@ public class FragmentContacts extends Fragment {
         return v;
     }
 
-    private String convertStreamToString(InputStream is) {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-        StringBuilder sb = new StringBuilder();
-
-        String line = null;
-        try {
-            while ((line = reader.readLine()) != null) {
-                sb.append(line).append('\n');
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                is.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return sb.toString();
-    }
-
-    private List<ModelContacts> getContacts() {
-        List<ModelContacts> list = new ArrayList<>();
+    private ArrayList<ModelContacts> getContacts() {
+       ArrayList<ModelContacts> list = new ArrayList<>();
 
         Uri CONTENT_URI = ContactsContract.Contacts.CONTENT_URI;
         String ID = ContactsContract.Contacts._ID;
@@ -115,7 +96,7 @@ public class FragmentContacts extends Fragment {
         ContentResolver contentResolver = getContext().getContentResolver();
         Cursor cursor = contentResolver.query(CONTENT_URI, null, null, null, DISPLAY_NAME);
 
-        String photo = null;
+        InputStream photo = null;
         String name = null;
         String mobile_num = null;
         String home_num = null;
@@ -126,8 +107,7 @@ public class FragmentContacts extends Fragment {
                 Long contact_id_long = cursor.getLong(cursor.getColumnIndex(ID));
 
                 Uri uri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, contact_id_long);
-                InputStream photo_is = ContactsContract.Contacts.openContactPhotoInputStream(contentResolver, uri);
-                //photo = convertStreamToString(photo_is);
+                photo = ContactsContract.Contacts.openContactPhotoInputStream(contentResolver, uri);
 
                 name = cursor.getString(cursor.getColumnIndex(DISPLAY_NAME));
 

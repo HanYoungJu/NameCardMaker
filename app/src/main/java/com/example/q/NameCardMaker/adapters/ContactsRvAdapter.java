@@ -2,6 +2,11 @@ package com.example.q.NameCardMaker.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
+import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,19 +18,20 @@ import com.example.q.NameCardMaker.R;
 import com.example.q.NameCardMaker.fragments.FragmentContacts;
 import com.example.q.NameCardMaker.models.ModelContacts;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ContactsRvAdapter extends RecyclerView.Adapter<ContactsRvAdapter.ViewHolder>{
     private Context mContext;
     private LayoutInflater inflater;
-    private List<ModelContacts> mListContacts;
+    private ArrayList<ModelContacts> mListContacts;
 
-    public ContactsRvAdapter(Context context, List<ModelContacts> listContacts) {
+    public ContactsRvAdapter(Context context, ArrayList<ModelContacts> listContacts) {
         mContext = context;
         mListContacts = listContacts;
     }
 
-    public List<ModelContacts> getContacts(){
+    public ArrayList<ModelContacts> getContacts(){
         return mListContacts;
     }
 
@@ -47,6 +53,15 @@ public class ContactsRvAdapter extends RecyclerView.Adapter<ContactsRvAdapter.Vi
         contact_name = holder.contact_name;
         contact_number = holder.contact_number;
         contact_photo = holder.contact_photo;
+
+        Bitmap photo = BitmapFactory.decodeStream(mListContacts.get(position).getPhoto());
+        if(photo !=null){
+            contact_photo.setImageBitmap(photo);
+        }
+        if(Build.VERSION.SDK_INT >= 21) {
+            contact_photo.setBackground(new ShapeDrawable(new OvalShape()));
+            contact_photo.setClipToOutline(true);
+        }
 
         contact_name.setText(mListContacts.get(position).getName());
         if(mListContacts.get(position).getMobile_num()!=null){
