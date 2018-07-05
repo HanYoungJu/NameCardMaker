@@ -69,13 +69,21 @@ public class FragmentFav extends Fragment {
         Bitmap thumbnail = ThumbnailUtils.extractThumbnail(bm,500,500);
         ImageView imageView = (ImageView) v.findViewById(R.id.picture);
         imageView.setImageBitmap(thumbnail);
+        ImageView setIcon = (ImageView) v.findViewById(R.id.icon);
+        setIcon.setImageResource(R.drawable.android3);
+
+
+
 
         Button button = (Button)v.findViewById(R.id.button3);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 MainActivity activity = (MainActivity)getActivity();
+
+
                 activity.refresh();
+
             }
         });
         return v;
