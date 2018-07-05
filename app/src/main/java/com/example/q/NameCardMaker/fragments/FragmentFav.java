@@ -4,7 +4,10 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.media.ThumbnailUtils;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -71,6 +74,9 @@ public class FragmentFav extends Fragment {
 
         Bitmap thumbnail = ThumbnailUtils.extractThumbnail(bm,500,500);
         ImageView imageView = (ImageView) v.findViewById(R.id.picture);
+        if(Build.VERSION.SDK_INT >= 21) {
+            imageView.setBackground(new ShapeDrawable(new OvalShape()));
+            imageView.setClipToOutline(true);}
         imageView.setImageBitmap(thumbnail);
         ImageView setIcon = (ImageView) v.findViewById(R.id.icon);
         setIcon.setImageResource(R.drawable.android3);
