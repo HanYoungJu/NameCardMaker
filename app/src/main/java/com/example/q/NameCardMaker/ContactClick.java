@@ -40,9 +40,7 @@ public class ContactClick extends Activity {
 
         ImageView id_view = (ImageView) findViewById(R.id.big_contact_image) ;
         InputStream photo_is = null;
-        if(Build.VERSION.SDK_INT >= 19) {
-            photo_is = new ByteArrayInputStream(photo.getBytes(StandardCharsets.UTF_8));
-        }
+
         Bitmap contactPhoto = BitmapFactory.decodeStream(photo_is);
         id_view.setImageBitmap(contactPhoto);
 
