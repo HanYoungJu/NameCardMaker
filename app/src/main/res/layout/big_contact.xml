@@ -10,6 +10,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
         android:scaleType="centerCrop"/>
+    <!--이름-->
     <TextView
         android:id="@+id/big_contact_name"
         android:layout_width="wrap_content"
@@ -20,6 +21,7 @@
         android:text="None"
         android:textSize="25sp"
         android:layout_marginLeft="20dp"/>
+    <!--전화번호 텍스트-->
     <TextView
         android:id="@+id/number_text"
         android:layout_width="wrap_content"
@@ -29,33 +31,59 @@
         android:layout_marginTop="30dp"
         android:text="전화번호"
         android:textSize="15sp"/>
-    <TextView
-        android:id="@+id/big_contact_mobile_number"
+    <!--휴대전화-->
+    <LinearLayout
+        android:id="@+id/mobile_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/number_text"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="8dp"
-        android:text="휴대전화  None"
-        android:textSize="20sp"/>
-    <TextView
-        android:id="@+id/big_contact_home_number"
+        android:layout_marginTop="8dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="휴대전화"
+            android:textSize="20sp"/>
+        <TextView
+            android:id="@+id/big_contact_mobile_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="None"
+            android:textSize="20sp"/>
+    </LinearLayout>
+    <!--집-->
+    <LinearLayout
+        android:id="@+id/home_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/big_contact_mobile_number"
+        android:layout_below="@+id/mobile_number"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="8dp"
-        android:text="집         None"
-        android:textSize="20sp"/>
+        android:layout_marginTop="8dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="집"
+            android:textSize="20sp"/>
+        <TextView
+            android:id="@+id/big_contact_home_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="77dp"
+            android:text="None"
+            android:textSize="20sp"/>
+    </LinearLayout>
+    <!--이메일 텍스트-->
     <TextView
         android:id="@+id/email_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/big_contact_home_number"
+        android:layout_below="@+id/home_number"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="25dp"
         android:text="이메일"
         android:textSize="15sp"/>
+    <!--이메일-->
     <TextView
         android:id="@+id/big_contact_email"
         android:layout_width="wrap_content"
@@ -65,6 +93,7 @@
         android:layout_marginTop="8dp"
         android:text="None"
         android:textSize="20sp"/>
+    <!--주소 텍스트-->
     <TextView
         android:id="@+id/adress_text"
         android:layout_width="wrap_content"
@@ -74,6 +103,7 @@
         android:layout_marginTop="25dp"
         android:text="주소"
         android:textSize="15sp"/>
+    <!--주소-->
     <TextView
         android:id="@+id/big_contact_adress"
         android:layout_width="wrap_content"
@@ -83,6 +113,7 @@
         android:layout_marginTop="8dp"
         android:text="None"
         android:textSize="20sp"/>
+    <!--선택 버튼-->
     <Button
         android:id="@+id/button"
         android:layout_width="match_parent"

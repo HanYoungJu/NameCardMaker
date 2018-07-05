@@ -28,17 +28,6 @@ public class ContactsRvAdapter extends RecyclerView.Adapter<ContactsRvAdapter.Vi
         return mListContacts;
     }
 
-    private ItemClick itemClick;
-
-    public interface ItemClick{
-        public void onClick(View view,int position);
-    }
-
-
-    public void setItemClick(ItemClick itemClick) {
-        this.itemClick = itemClick;
-    }
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         inflater = LayoutInflater.from(mContext);
@@ -57,7 +46,12 @@ public class ContactsRvAdapter extends RecyclerView.Adapter<ContactsRvAdapter.Vi
         contact_number = holder.contact_number;
 
         contact_name.setText(mListContacts.get(position).getName());
-        contact_number.setText(mListContacts.get(position).getNumber());
+        if(mListContacts.get(position).getMobile_num()!=null){
+            contact_number.setText("휴대전화 "+mListContacts.get(position).getMobile_num());
+        }
+        else if(mListContacts.get(position).getHome_num()!=null){
+            contact_number.setText("집 "+ mListContacts.get(position).getHome_num());
+        }
     }
 
     @Override
@@ -69,7 +63,6 @@ public class ContactsRvAdapter extends RecyclerView.Adapter<ContactsRvAdapter.Vi
         TextView contact_name, contact_number;
         public ViewHolder(View itemView) {
             super(itemView);
-
             contact_name = itemView.findViewById(R.id.contact_name);
             contact_number = itemView.findViewById(R.id.contact_number);
         }

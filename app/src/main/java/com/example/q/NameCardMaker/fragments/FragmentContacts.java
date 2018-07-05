@@ -22,9 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FragmentContacts extends Fragment {
-
     private View v;
-
     private RecyclerView recyclerView;
 
     public FragmentContacts() {
@@ -33,15 +31,10 @@ public class FragmentContacts extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-
         v = inflater.inflate(R.layout.frag_contacts, container, false);
-
         recyclerView = v.findViewById(R.id.rv_contacts);
-
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-
         RecyclerView.LayoutManager layoutManager = linearLayoutManager;
-
         recyclerView.setLayoutManager(layoutManager);
 
         ContactsRvAdapter adapter = new ContactsRvAdapter(getContext(), getContacts());
@@ -54,14 +47,18 @@ public class FragmentContacts extends Fragment {
             public void onItemClick(View v, int position) {
                 Intent i = new Intent(getActivity().getApplicationContext(), ContactClick.class);
                 i.putExtra("name", contacts_list.get(position).getName());
-                i.putExtra("number", contacts_list.get(position).getNumber());
+                i.putExtra("mobile_num", contacts_list.get(position).getMobile_num());
+                i.putExtra("home_num", contacts_list.get(position).getHome_num());
+                i.putExtra("email", contacts_list.get(position).getEmail());
                 startActivity(i);
             }
             @Override
             public void onItemLongClick(View v, int position) {
                 Intent i = new Intent(getActivity().getApplicationContext(), ContactClick.class);
                 i.putExtra("name", contacts_list.get(position).getName());
-                i.putExtra("number", contacts_list.get(position).getNumber());
+                i.putExtra("mobie_num", contacts_list.get(position).getMobile_num());
+                i.putExtra("home_num", contacts_list.get(position).getHome_num());
+                i.putExtra("email", contacts_list.get(position).getEmail());
                 startActivity(i);
             }
         } ));
@@ -70,55 +67,37 @@ public class FragmentContacts extends Fragment {
     }
 
     private List<ModelContacts> getContacts() {
-
         List<ModelContacts> list = new ArrayList<>();
         String[] arrEmailProjection = {
                 ContactsContract.CommonDataKinds.Email.DATA
         };
-
         Cursor cursor = getContext().getContentResolver().query(ContactsContract.Contacts.CONTENT_URI,
                 null, null, null, ContactsContract.Contacts.DISPLAY_NAME);
 
         int ididx = cursor.getColumnIndex(ContactsContract.Contacts._ID);
-        int nameidx = cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME);
         cursor.moveToFirst();
-        while (cursor.moveToNext()) {
-
-            String name = cursor.getString(nameidx);
+        do {
             String id = cursor.getString(ididx);
-
             Cursor cursor2 = getContext().getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                     null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=?", new String[]{id}, null);
-
-            int typeidx = cursor2.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE);
-            int numidx = cursor2.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
-            String mobile_num = null;
-            String home_num = null;
             while(cursor2.moveToNext()) {
-                String num = cursor2.getString(numidx);
-                switch (cursor2.getInt(typeidx)) {
+                String photo=null;
+                String name = cursor2.getString(cursor2.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
+                String num = cursor2.getString(cursor2.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                String email = cursor2.getString(cursor2.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
+                int type = cursor2.getInt(cursor2.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE));
+                String mobile_num = null, home_num = null;
+                switch (type) {
                     case ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE:
-                        mobile_num = "휴대폰 "+num;
+                        mobile_num = num;
                         break;
                     case ContactsContract.CommonDataKinds.Phone.TYPE_HOME:
-                        mobile_num = "집 "+num;
+                        home_num = num;
                         break;
                 }
+                list.add(new ModelContacts(photo, name, mobile_num, home_num, email));
             }
-            //이메일 파트
-            String strContactId = cursor.getString(0);
-            Cursor cursor3 = getContext().getContentResolver().query(
-                    ContactsContract.CommonDataKinds.Email.CONTENT_URI,
-                    arrEmailProjection,
-                    ContactsContract.CommonDataKinds.Phone.CONTACT_ID+" = "+strContactId,
-                    null,null);
-            String email = null;
-            while(cursor3.moveToNext()){
-                email = cursor3.getString(0);
-            }
-            cursor3.close();
-            list.add(new ModelContacts(name, mobile_num, email));
-        }
+        }while (cursor.moveToNext());
 
         return list;
     }

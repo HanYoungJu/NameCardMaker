@@ -3,44 +3,41 @@ package com.example.q.NameCardMaker.models;
 import android.graphics.Bitmap;
 
 public class ModelContacts {
-    private Bitmap photo;
-    private String name, number, email;
+    private String photo, name, mobile_num, home_num, email;
 
-    public ModelContacts(String name, String number, String email) {
+    public ModelContacts(String photo, String name, String mobile_number, String home_num, String email) {
+        this.photo = photo;
         this.name = name;
-        this.number = number;
+        this.mobile_num = mobile_number;
+        this.home_num = home_num;
         this.email = email;
+    }
+    public String getPhoto(){
+        return photo;
+    }
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
 
-    public String getNumber() {
-        return number;
-    }
+    public String getMobile_num(){ return mobile_num; }
+    public void setMobile_num(String mobile_num){ this.mobile_num = mobile_num; }
 
-    public void setNumber(String number) {
-        this.number = number;
-    }
+    public String getHome_num(){ return home_num; }
+    public void setHome_num(String mobile_num){ this.home_num = home_num; }
 
     public String getEmail() {
         return email;
     }
-
     public void setEmail(String email) {
         this.email = email;
     }
 
-    public Bitmap getPhoto(){
-        return photo;
-    }
 
-    public void setPhoto(Bitmap photo) {
-        this.photo = photo;
-    }
 }

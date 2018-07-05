@@ -31,12 +31,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void refresh(){
         SharedPreferences pref = getSharedPreferences("Variable", 0);
-        String link_final = pref.getString("link", null);
-        String name_final = pref.getString("name", null);
-        String number_final = pref.getString("number", null);
+        String link = pref.getString("link", null);
+        String name = pref.getString("name", null);
+        String mobile_num = pref.getString("mobile_num", null);
+        String home_num = pref.getString("home_num", null);
+        String email = pref.getString("email", null);
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frag_fav, FragmentFav.newInstance(link_final,name_final,number_final));
+        fragmentTransaction.replace(R.id.frag_fav, FragmentFav.newInstance(link, name, mobile_num, home_num, email));
         fragmentTransaction.commit();
     }
 
