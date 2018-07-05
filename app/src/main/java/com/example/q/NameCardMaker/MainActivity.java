@@ -19,6 +19,7 @@ import com.example.q.NameCardMaker.adapters.ViewPagerAdapter;
 import com.example.q.NameCardMaker.fragments.FragmentContacts;
 import com.example.q.NameCardMaker.fragments.FragmentFav;
 import com.example.q.NameCardMaker.fragments.FragmentGallery;
+import com.example.q.NameCardMaker.models.CaptureUtil;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ActivityCompat.requestPermissions(this, PERMISSIONS, REQUEST_ALL);
+        Button capture = (Button) findViewById(R.id.capture);
     }
     public void setAll(){
         if (!mayRequestContacts()) { return; }
