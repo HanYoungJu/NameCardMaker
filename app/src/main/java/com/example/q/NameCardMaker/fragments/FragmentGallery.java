@@ -10,6 +10,7 @@ import android.graphics.Matrix;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -26,6 +27,10 @@ import com.example.q.NameCardMaker.R;
 import com.example.q.NameCardMaker.adapters.GalleryAdapter;
 import com.example.q.NameCardMaker.models.ExifUtils;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +41,7 @@ public class FragmentGallery extends Fragment {
     public static ArrayList<String> link = GalleryAdapter.getLinks();
 
     public FragmentGallery() {}
+
 
     public List<String> getCameraImages() {
         String[] projection = new String[] { MediaStore.Images.Media._ID, MediaStore.Images.Media.DATA };
