@@ -1,6 +1,7 @@
 package com.example.q.NameCardMaker.fragments;
 
 import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -20,12 +21,14 @@ import com.example.q.NameCardMaker.RecyclerViewOnItemClickListener;
 import com.example.q.NameCardMaker.adapters.ContactsRvAdapter;
 import com.example.q.NameCardMaker.models.ModelContacts;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FragmentContacts extends Fragment {
     private View v;
     private RecyclerView recyclerView;
+    private InputStream photo;
 
     public FragmentContacts() {
     }
@@ -87,7 +90,6 @@ public class FragmentContacts extends Fragment {
         ContentResolver contentResolver = getContext().getContentResolver();
         Cursor cursor = contentResolver.query(CONTENT_URI, null, null, null, DISPLAY_NAME);
 
-        String photo = null;
         String name = null;
         String mobile_num = null;
         String home_num = null;
@@ -95,6 +97,11 @@ public class FragmentContacts extends Fragment {
         if(cursor.getCount()>0){
             while(cursor.moveToNext()){
                 String contact_id = cursor.getString(cursor.getColumnIndex(ID));
+                Long contact_id_long = cursor.getLong(cursor.getColumnIndex(ID));
+
+                Uri uri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, contact_id_long);
+                photo = ContactsContract.Contacts.openContactPhotoInputStream(contentResolver, uri);
+
                 name = cursor.getString(cursor.getColumnIndex(DISPLAY_NAME));
 
                 int hasPhoneNumber = Integer.parseInt(cursor.getString(cursor.getColumnIndex(HAS_PHONE_NUMBER)));

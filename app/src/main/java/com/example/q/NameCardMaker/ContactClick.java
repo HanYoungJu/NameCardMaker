@@ -3,7 +3,6 @@ package com.example.q.NameCardMaker;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.ScaleDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Build;
@@ -13,8 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
+import java.io.InputStream;
 
 public class ContactClick extends Activity {
     @Override
@@ -27,6 +25,7 @@ public class ContactClick extends Activity {
         super.onResume();
         Intent i = getIntent();
         // Selected image id
+        final InputStream photo = null;
         final String name = i.getExtras().getString("name");
         final String mobile_num = i.getExtras().getString("mobile_num");
         final String home_num = i.getExtras().getString("home_num");
@@ -34,6 +33,7 @@ public class ContactClick extends Activity {
         Log.d("position is here", name);
 
         ImageView id_view = (ImageView) findViewById(R.id.big_contact_image) ;
+        //id_view.setImageBitmap(photo);
 
         if(Build.VERSION.SDK_INT >= 21) {
         id_view.setBackground(new ShapeDrawable(new OvalShape()));
