@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.example.q.NameCardMaker.MainActivity;
 import com.example.q.NameCardMaker.R;
+import com.example.q.NameCardMaker.models.ExifUtils;
 
 
 public class FragmentFav extends Fragment {
@@ -66,6 +67,8 @@ public class FragmentFav extends Fragment {
         view_number.setText(mobile_num);
 
         Bitmap bm = BitmapFactory.decodeFile(link);
+        bm = ExifUtils.rotateBitmap(link,bm);
+
         Bitmap thumbnail = ThumbnailUtils.extractThumbnail(bm,500,500);
         ImageView imageView = (ImageView) v.findViewById(R.id.picture);
         imageView.setImageBitmap(thumbnail);

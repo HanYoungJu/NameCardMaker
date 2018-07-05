@@ -24,6 +24,7 @@ import android.widget.GridView;
 import com.example.q.NameCardMaker.GalleryClick;
 import com.example.q.NameCardMaker.R;
 import com.example.q.NameCardMaker.adapters.GalleryAdapter;
+import com.example.q.NameCardMaker.models.ExifUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,9 +106,7 @@ public class FragmentGallery extends Fragment {
             String imgpath = allimage.get(index++);
             Log.d("img path is ", imgpath);
             Bitmap bm = BitmapFactory.decodeFile(imgpath);
-            if(bm.getHeight()<bm.getWidth()){
-                bm = imgRotate(bm);
-            }
+            bm = ExifUtils.rotateBitmap(imgpath,bm);
 
 
             Bitmap thumbnail = ThumbnailUtils.extractThumbnail(bm,300,300);
