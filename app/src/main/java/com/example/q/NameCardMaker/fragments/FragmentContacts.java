@@ -21,14 +21,16 @@ import com.example.q.NameCardMaker.RecyclerViewOnItemClickListener;
 import com.example.q.NameCardMaker.adapters.ContactsRvAdapter;
 import com.example.q.NameCardMaker.models.ModelContacts;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FragmentContacts extends Fragment {
     private View v;
     private RecyclerView recyclerView;
-    private InputStream photo;
 
     public FragmentContacts() {
     }
@@ -51,6 +53,7 @@ public class FragmentContacts extends Fragment {
             @Override
             public void onItemClick(View v, int position) {
                 Intent i = new Intent(getActivity().getApplicationContext(), ContactClick.class);
+                i.putExtra("photo", contacts_list.get(position).getPhoto());
                 i.putExtra("name", contacts_list.get(position).getName());
                 i.putExtra("mobile_num", contacts_list.get(position).getMobile_num());
                 i.putExtra("home_num", contacts_list.get(position).getHome_num());
@@ -60,6 +63,7 @@ public class FragmentContacts extends Fragment {
             @Override
             public void onItemLongClick(View v, int position) {
                 Intent i = new Intent(getActivity().getApplicationContext(), ContactClick.class);
+                i.putExtra("photo", contacts_list.get(position).getPhoto());
                 i.putExtra("name", contacts_list.get(position).getName());
                 i.putExtra("mobie_num", contacts_list.get(position).getMobile_num());
                 i.putExtra("home_num", contacts_list.get(position).getHome_num());
@@ -90,6 +94,7 @@ public class FragmentContacts extends Fragment {
         ContentResolver contentResolver = getContext().getContentResolver();
         Cursor cursor = contentResolver.query(CONTENT_URI, null, null, null, DISPLAY_NAME);
 
+        String photo = null;
         String name = null;
         String mobile_num = null;
         String home_num = null;
@@ -100,7 +105,8 @@ public class FragmentContacts extends Fragment {
                 Long contact_id_long = cursor.getLong(cursor.getColumnIndex(ID));
 
                 Uri uri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, contact_id_long);
-                photo = ContactsContract.Contacts.openContactPhotoInputStream(contentResolver, uri);
+                InputStream photo_is = ContactsContract.Contacts.openContactPhotoInputStream(contentResolver, uri);
+                //photo = convertStreamToString(photo_is);
 
                 name = cursor.getString(cursor.getColumnIndex(DISPLAY_NAME));
 

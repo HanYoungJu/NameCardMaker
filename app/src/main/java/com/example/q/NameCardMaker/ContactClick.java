@@ -3,6 +3,8 @@ package com.example.q.NameCardMaker;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Build;
@@ -12,7 +14,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.stream.Stream;
 
 public class ContactClick extends Activity {
     @Override
@@ -25,7 +31,7 @@ public class ContactClick extends Activity {
         super.onResume();
         Intent i = getIntent();
         // Selected image id
-        final InputStream photo = null;
+        final String photo = i.getExtras().getString("photo");
         final String name = i.getExtras().getString("name");
         final String mobile_num = i.getExtras().getString("mobile_num");
         final String home_num = i.getExtras().getString("home_num");
@@ -33,7 +39,12 @@ public class ContactClick extends Activity {
         Log.d("position is here", name);
 
         ImageView id_view = (ImageView) findViewById(R.id.big_contact_image) ;
-        //id_view.setImageBitmap(photo);
+        InputStream photo_is = null;
+        if(Build.VERSION.SDK_INT >= 19) {
+            photo_is = new ByteArrayInputStream(photo.getBytes(StandardCharsets.UTF_8));
+        }
+        Bitmap contactPhoto = BitmapFactory.decodeStream(photo_is);
+        id_view.setImageBitmap(contactPhoto);
 
         if(Build.VERSION.SDK_INT >= 21) {
         id_view.setBackground(new ShapeDrawable(new OvalShape()));

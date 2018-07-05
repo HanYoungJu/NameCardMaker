@@ -72,9 +72,6 @@ public class FragmentFav extends Fragment {
         ImageView setIcon = (ImageView) v.findViewById(R.id.icon);
         setIcon.setImageResource(R.drawable.android3);
 
-
-
-
         Button button = (Button)v.findViewById(R.id.button3);
         button.setOnClickListener(new View.OnClickListener() {
             @Override

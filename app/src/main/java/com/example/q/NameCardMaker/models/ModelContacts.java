@@ -5,20 +5,19 @@ import android.graphics.Bitmap;
 import java.io.InputStream;
 
 public class ModelContacts {
-    private InputStream photo;
-    private String name, mobile_num, home_num, email;
+    private String photo, name, mobile_num, home_num, email;
 
-    public ModelContacts(InputStream photo, String name, String mobile_number, String home_num, String email) {
+    public ModelContacts(String photo, String name, String mobile_number, String home_num, String email) {
         this.photo = photo;
         this.name = name;
         this.mobile_num = mobile_number;
         this.home_num = home_num;
         this.email = email;
     }
-    public InputStream getPhoto(){
+    public String getPhoto(){
         return photo;
     }
-    public void setPhoto(InputStream photo) {
+    public void setPhoto(String photo) {
         this.photo = photo;
     }
 
