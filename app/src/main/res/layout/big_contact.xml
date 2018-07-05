@@ -69,7 +69,7 @@
             android:id="@+id/big_contact_home_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="77dp"
+            android:layout_marginLeft="72dp"
             android:text="None"
             android:textSize="20sp"/>
     </LinearLayout>

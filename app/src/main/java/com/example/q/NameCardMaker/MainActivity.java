@@ -2,6 +2,7 @@ package com.example.q.NameCardMaker;
 
 import android.Manifest;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
@@ -48,27 +49,51 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ActivityCompat.requestPermissions(this, PERMISSIONS, REQUEST_ALL);
     }
+    public void setAll(){
+        if (!mayRequestContacts()) { return; }
+        tabLayout = findViewById(R.id.tablayout);
+        viewPager = findViewById(R.id.viewpager);
+
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+
+        adapter.addFragment(new FragmentContacts(), "연락처");
+        adapter.addFragment(new FragmentGallery(), "사진");
+        adapter.addFragment(new FragmentFav(), "명함");
+
+        viewPager.setAdapter(adapter);
+
+        tabLayout.setupWithViewPager(viewPager);
+
+        for (int i = 0; i < tabLayout.getTabCount(); i++) {
+            tabLayout.getTabAt(i).setIcon(ICONS[i]);
+        }
+    }
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        int permission_count = 0;
         for( String permission : permissions) {
             if (ActivityCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED) {
-                tabLayout = findViewById(R.id.tablayout);
-                viewPager = findViewById(R.id.viewpager);
+                permission_count++;
+            }
+        }
+        if(permission_count==3){
+            setAll();
+        }
+    }
 
-                ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-
-                adapter.addFragment(new FragmentContacts(), "연락처");
-                adapter.addFragment(new FragmentGallery(), "사진");
-                adapter.addFragment(new FragmentFav(), "명함");
-
-                viewPager.setAdapter(adapter);
-
-                tabLayout.setupWithViewPager(viewPager);
-
-                for (int i = 0; i < tabLayout.getTabCount(); i++) {
-                    tabLayout.getTabAt(i).setIcon(ICONS[i]);
+    private boolean mayRequestContacts() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            return true;
+        }
+        if (ActivityCompat.checkSelfPermission(this,PERMISSIONS[0]) == PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(this,PERMISSIONS[1]) == PackageManager.PERMISSION_GRANTED){
+                if (ActivityCompat.checkSelfPermission(this,PERMISSIONS[2]) == PackageManager.PERMISSION_GRANTED){
+                    return true;
                 }
             }
         }
+        ActivityCompat.requestPermissions(this, PERMISSIONS, REQUEST_ALL);
+        return false;
     }
+
 }
