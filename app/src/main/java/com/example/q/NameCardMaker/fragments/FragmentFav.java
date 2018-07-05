@@ -63,7 +63,7 @@ public class FragmentFav extends Fragment {
         view_name.setText(name);
 
         TextView view_number =(TextView) v.findViewById(R.id.number);
-        view_number.setText(mobile_num);
+        view_number.setText("b");
 
         Bitmap bm = BitmapFactory.decodeFile(link);
         Bitmap thumbnail = ThumbnailUtils.extractThumbnail(bm,500,500);
