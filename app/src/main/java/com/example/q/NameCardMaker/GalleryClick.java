@@ -12,6 +12,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.example.q.NameCardMaker.models.ExifUtils;
 
 
 public class GalleryClick extends Activity {
@@ -41,9 +44,7 @@ public class GalleryClick extends Activity {
 
         Log.d("position is here", link);
         Bitmap bm = BitmapFactory.decodeFile(link);
-        if(bm.getHeight()<bm.getWidth()){
-            bm = imgRotate(bm);
-        }
+        bm = ExifUtils.rotateBitmap(link,bm);
 
         ImageView imageView = (ImageView) findViewById(R.id.picture);
         imageView.setImageBitmap(bm);
@@ -55,6 +56,8 @@ public class GalleryClick extends Activity {
                 SharedPreferences.Editor editor = pref.edit();
                 editor.putString("link", link);
                 editor.commit();
+                Toast toast = Toast.makeText(GalleryClick.this, "사진이 선택되었습니다",Toast.LENGTH_SHORT);
+                toast.show();
             }
         });
     }
