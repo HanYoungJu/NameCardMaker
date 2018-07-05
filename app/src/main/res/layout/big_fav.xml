@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    android:id="@+id/frag_fav"
+    android:id="@+id/big_fav"
     >
 
     <ImageView
@@ -48,25 +48,6 @@
         android:transformPivotY="40dp"
         android:transformPivotX="-10dp"/>
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="20dp"
-        android:text="미리보기" />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:id="@+id/capture"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="20dp"
-        android:text="저장"/>
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -76,6 +57,16 @@
         android:layout_alignParentLeft="true"
         android:layout_marginBottom="30dp"
         android:layout_marginLeft="30dp"/>
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/icon"
+        android:layout_alignLeft="@+id/icon"
+        android:layout_marginBottom="18dp"
+        android:text="저장" />
 
 
 </RelativeLayout>

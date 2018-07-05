@@ -20,9 +20,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 
 import com.example.q.NameCardMaker.GalleryClick;
+import com.example.q.NameCardMaker.MainActivity;
 import com.example.q.NameCardMaker.R;
 import com.example.q.NameCardMaker.adapters.GalleryAdapter;
 import com.example.q.NameCardMaker.models.ExifUtils;
@@ -42,7 +44,10 @@ public class FragmentGallery extends Fragment {
 
     public FragmentGallery() {}
 
-
+    public static Fragment newInstance() {
+        FragmentFav fragment = new FragmentFav();
+        return fragment;
+    }
     public List<String> getCameraImages() {
         String[] projection = new String[] { MediaStore.Images.Media._ID, MediaStore.Images.Media.DATA };
         Uri imageURI = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
@@ -81,25 +86,18 @@ public class FragmentGallery extends Fragment {
                 startActivity(i);
             }
         });
+        Button button = (Button)view.findViewById(R.id.button5);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dataSetting();
+            }
+        });
 
         return view;
     }
 
-    private Bitmap imgRotate(Bitmap bm){
-        int width = bm.getWidth();
-        int height = bm.getHeight();
-
-        Matrix matrix = new Matrix();
-        matrix.postRotate(90);
-
-        Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, true);
-        bm.recycle();
-
-        return resizedBitmap;
-
-    }
-
-    private void dataSetting(){
+    public void dataSetting(){
 
         List<String> allimage = getCameraImages();
         int len = allimage.size();

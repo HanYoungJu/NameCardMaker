@@ -27,8 +27,8 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private String[] PERMISSIONS = {Manifest.permission.READ_CONTACTS,
-            Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.READ_CALL_LOG};
-    private static int REQUEST_ALL = 3;
+            Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA};
+    private static int REQUEST_ALL = 4;
     private final int[] ICONS = {R.drawable.ic_launcher_foreground, R.drawable.ic_launcher_foreground, R.drawable.ic_launcher_foreground};
 
     public void refresh(){
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                 permission_count++;
             }
         }
-        if(permission_count==3){
+        if(permission_count==4){
             setAll();
         }
     }
@@ -90,7 +90,9 @@ public class MainActivity extends AppCompatActivity {
         if (ActivityCompat.checkSelfPermission(this,PERMISSIONS[0]) == PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.checkSelfPermission(this,PERMISSIONS[1]) == PackageManager.PERMISSION_GRANTED){
                 if (ActivityCompat.checkSelfPermission(this,PERMISSIONS[2]) == PackageManager.PERMISSION_GRANTED){
-                    return true;
+                    if (ActivityCompat.checkSelfPermission(this,PERMISSIONS[3]) == PackageManager.PERMISSION_GRANTED) {
+                        return true;
+                    }
                 }
             }
         }

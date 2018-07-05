@@ -26,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.q.NameCardMaker.FavClick;
 import com.example.q.NameCardMaker.GalleryClick;
 import com.example.q.NameCardMaker.MainActivity;
 import com.example.q.NameCardMaker.R;
@@ -52,62 +53,6 @@ public class FragmentFav extends Fragment {
     public FragmentFav() {
 
     }
-    private void SaveBitmapToFileCache(Bitmap bitmap, String strFilePath, String strFileName) {
-        File path = new File(strFilePath);
-        if (!path.exists()) {
-            path.mkdirs();
-        }
-        File fileCacheItem = new File(strFilePath+strFileName);
-        Log.i("Tag", strFilePath+strFileName);
-        OutputStream out = null;
-        try
-        {
-            fileCacheItem.createNewFile();
-            out = new FileOutputStream(fileCacheItem);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-        finally
-        {
-            try
-            {
-                out.close();
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
-        }
-    }
-
-
-
-
-    public File ScreenShot(View view){
-        view.setDrawingCacheEnabled(true);  //화면에 뿌릴때 캐시를 사용하게 한다
-
-        Bitmap screenBitmap = view.getDrawingCache();   //캐시를 비트맵으로 변환
-
-        String filename = "screenshot.png";
-        File file = new File(Environment.getExternalStorageDirectory()+"/Pictures", filename);  //Pictures폴더 screenshot.png 파일
-        FileOutputStream os = null;
-        try{
-            os = new FileOutputStream(file);
-            screenBitmap.compress(Bitmap.CompressFormat.PNG, 90, os);   //비트맵을 PNG파일로 변환
-            os.close();
-        }catch (IOException e){
-            e.printStackTrace();
-            return null;
-        }
-
-        view.setDrawingCacheEnabled(false);
-        return file;
-    }
-
-
     public static Fragment newInstance(String link,String name,String mobile_num, String home_num, String email) {
         FragmentFav fragment = new FragmentFav();
         Bundle args = new Bundle();
@@ -135,17 +80,12 @@ public class FragmentFav extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         v = inflater.inflate(R.layout.frag_fav, container, false);
-        v.setDrawingCacheEnabled(true);
-        v.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
-
-
-
 
         TextView view_name =(TextView) v.findViewById(R.id.name);
         view_name.setText(name);
 
         TextView view_number =(TextView) v.findViewById(R.id.number);
-        view_number.setText(mobile_num);
+        view_number.setText("Mobile: "+mobile_num);
 
         Bitmap bm = BitmapFactory.decodeFile(link);
         bm = ExifUtils.rotateBitmap(link,bm);
@@ -166,25 +106,15 @@ public class FragmentFav extends Fragment {
             @Override
             public void onClick(View view) {
                 MainActivity activity = (MainActivity)getActivity();
-
-
                 activity.refresh();
-
             }
         });
 
         capture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                View capture = v.findViewById(R.id.frag_fav);
-                File screenShot = ScreenShot(capture);
-
-                if(screenShot!=null){
-                    //갤러리에 추가
-                    getActivity().sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(screenShot)));
-                    Toast toast = Toast.makeText(getActivity().getApplicationContext(), "사진이 저장되었습니다",Toast.LENGTH_SHORT);
-                    toast.show();
-                }
+                Intent i = new Intent(getActivity().getApplicationContext(), FavClick.class);
+                startActivity(i);
             }
         });
 

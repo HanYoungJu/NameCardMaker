@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.q.NameCardMaker.models.ModelContacts;
 
@@ -34,8 +35,7 @@ public class ContactClick extends Activity {
     public void onResume(){
         super.onResume();
         Intent i = getIntent();
-        // Selected image id
-        final ModelContacts list = (ModelContacts) i.getSerializableExtra("list");
+        //final ModelContacts list = (ModelContacts) i.getSerializableExtra("list");
         final String name = i.getExtras().getString("name");
         final String mobile_num = i.getExtras().getString("mobile_num");
         final String home_num = i.getExtras().getString("home_num");
@@ -84,6 +84,8 @@ public class ContactClick extends Activity {
                 editor.putString("home_num", home_num);
                 editor.putString("email", email);
                 editor.commit();
+                Toast toast = Toast.makeText(ContactClick.this, "선택되었습니다",Toast.LENGTH_SHORT);
+                toast.show();
             }
         });
     }

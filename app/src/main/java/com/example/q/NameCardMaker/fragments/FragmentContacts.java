@@ -52,20 +52,25 @@ public class FragmentContacts extends Fragment {
                 new RecyclerViewOnItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
-                ModelContacts list = contacts_list.get(position+1);
+                //ModelContacts list = contacts_list.get(position+1);
                 Intent i = new Intent(getActivity().getApplicationContext(), ContactClick.class);
-                i.putExtra("contact",list);
+                //i.putExtra("contact",list);
                 i.putExtra("name", contacts_list.get(position).getName());
                 i.putExtra("mobile_num", contacts_list.get(position).getMobile_num());
-                i.putExtra("home_num", contacts_list.get(position).getHome_num());
+                if(contacts_list.get(position).getHome_num()!=null){
+                    i.putExtra("home_num", contacts_list.get(position).getHome_num());
+                }else{
+                    i.putExtra("home_num", "None");
+                }
+
                 i.putExtra("email", contacts_list.get(position).getEmail());
                 startActivity(i);
             }
             @Override
             public void onItemLongClick(View v, int position) {
-                ModelContacts list = contacts_list.get(position+1);
+                //ModelContacts list = contacts_list.get(position+1);
                 Intent i = new Intent(getActivity().getApplicationContext(), ContactClick.class);
-                i.putExtra("contact",list);
+                //i.putExtra("contact",list);
                 i.putExtra("name", contacts_list.get(position).getName());
                 i.putExtra("mobie_num", contacts_list.get(position).getMobile_num());
                 i.putExtra("home_num", contacts_list.get(position).getHome_num());
