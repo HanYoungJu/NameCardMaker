@@ -64,7 +64,7 @@ public class FavClick extends Activity {
 
         final Button button_save = (Button) findViewById(R.id.button4);
         button_save.setOnClickListener(new View.OnClickListener() {
-            int file_count = 0;
+            int file_count = 100;
             @Override
             public void onClick(View view) {
                 View rootView = getWindow().getDecorView();
